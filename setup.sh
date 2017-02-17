@@ -22,13 +22,12 @@ sudo sed -i 's/false/true/g' /etc/apt/apt.conf.d/00recommends >>setup.log 2>&1
 sudo apt-get update >>setup.log 2>&1
 #install messengers early so we can chat while install continues
 echo "installing messengers.. (we can chat while installing)"
-sudo apt-get install -q telegram hexchat >>setup.log 2>&1
-wget https://go.skype.com/skypeforlinux-64-alpha.deb >>setup.log 2>&1
-sudo dpkg -i --force-depends skypeforlinux-64-alpha.deb >>setup.log 2>&1
-wget -o discord.deb https://discordapp.com/api/download?platform=linux&format=deb >>setup.log 2>&1
-sudo dpkg -i  discord.deb >>setup.log 2>&1
-wget -o rambox.deb https://getrambox.herokuapp.com/download/linux_64?filetype=deb
-sudo dpkg -i rambox.deb >>setup.log 2>&1
+xinstall telegram
+xinstall hexchat
+binstall skype https://go.skype.com/skypeforlinux-64-alpha.deb
+binstall discord https://discordapp.com/api/download?platform=linux&format=deb
+binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
+
 
 echo "running updates..."
 sudo apt-get -y upgrade >>setup.log 2>&1
@@ -111,9 +110,7 @@ sudo adduser jennifer vboxusers >>setup.log 2>&1
 echo "web browsers.."
 xinstall tor-browser
 xinstall firefox
-
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb >>setup.log 2>&1
-sudo dpkg -i google-chrome-stable_current_amd64.deb >>setup.log 2>&1
+binstall chrome https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
 echo "misc development tools.."
 xinstall autoconf
@@ -159,8 +156,7 @@ curl -L https://cli-assets.heroku.com/apt/release.key | sudo apt-key add - >>set
 sudo apt-get install -q heroku >>setup.log 2>&1
 
 echo "gitkracken.."
-wget https://release.gitkraken.com/linux/gitkraken-amd64.deb >>setup.log 2>&1
-sudo dpkg -i gitkraken-amd64.deb >>setup.log 2>&1
+binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
 
 echo "atom.."
 xinstall atom
@@ -180,4 +176,10 @@ sudo apt-get -y autoremove >>setup.log 2>&1
 xinstall () {
   echo "installing $1"
   apt-get install -q -y "$1" >> setup.log 2>&1 || echo -e "${RED}$1 not installed${NC}"
+}
+binstall () {
+  echo "installing $1"
+  pkg=$1.deb
+  wget -o $pkg $2 >>setup.log 2>&1
+  sudo dpkg -i $pkg >>setup.log 2>&1
 }
