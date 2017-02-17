@@ -4,15 +4,22 @@ RED='\033[0;31m'
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 echo "Adding repositories.."
-sudo add-apt-repository -y ppa:linrunner/tlp >>setup.log 2>&1           #tlp
-sudo add-apt-repository -y ppa:peterlevi/ppa >>setup.log 2>&1            #variety
-sudo add-apt-repository -y ppa:atareao/telegram >>setup.log 2>&1         #telegram
-sudo add-apt-repository -y ppa:dawidd0811/neofetch >>setup.log 2>&1      #neofetch
-sudo add-apt-repository -y ppa:webupd8team/tor-browser >>setup.log 2>&1   #tor-browser
-sudo add-apt-repository -y ppa:nilarimogard/webupd8 >>setup.log 2>&1    #youtube-dl
-sudo add-apt-repository -y ppa:webupd8team/atom >>setup.log 2>&1       #atom
+echo "  ${GREEN}tlp${NC}"
+sudo add-apt-repository -y ppa:linrunner/tlp >>setup.log 2>&1
+echo "  ${GREEN}variety${NC}"
+sudo add-apt-repository -y ppa:peterlevi/ppa >>setup.log 2>&1
+echo "  ${GREEN}telegram${NC}"
+sudo add-apt-repository -y ppa:atareao/telegram >>setup.log 2>&1
+echo "  ${GREEN}neofetch${NC}"
+sudo add-apt-repository -y ppa:dawidd0811/neofetch >>setup.log 2>&1
+echo "  ${GREEN}tor browser${NC}"
+sudo add-apt-repository -y ppa:webupd8team/tor-browser >>setup.log 2>&1
+echo "  ${GREEN}youtube-dl${NC}"
+sudo add-apt-repository -y ppa:nilarimogard/webupd8 >>setup.log 2>&1
+echo "  ${GREEN}atom${NC}"
+sudo add-apt-repository -y ppa:webupd8team/atom >>setup.log 2>&1
+echo "  ${GREEN}heroku${NC}"
 sudo add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/apt ./" >>setup.log 2>&1 #heroku
-
 
 echo "change mirrors & turn on recommends.."
 sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
@@ -32,7 +39,7 @@ binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
 echo "running updates..."
 sudo apt-get -y upgrade >>setup.log 2>&1
 
-echo "installing hardware stuffs..."
+echo "hardware stuffs..."
 xinstall tlp
 xinstall tlp-rdw
 xinstall thermald
@@ -46,7 +53,7 @@ xinstall primus-libs
 xinstall microcode.ctl
 xinstall intel-microcode
 
-echo "installing codecs..  remove flash"
+echo "codecs..  remove flash"
 xinstall mint-meta-codecs
 sudo apt-get purge -y -q flashplugin-installer
 
@@ -141,18 +148,18 @@ xinstall sqlite3
 xinstall zlib1g
 xinstall zlib1g-dev
 
-echo "rvm.."
+echo "  ${GREEN}installing rvm.."
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>setup.log 2>&1
 curl -L get.rvm.io | bash -s stable >>setup.log 2>&1
 
-echo "ruby 2.3 .."
+echo "  ${GREEN}installing ruby 2.3..${NC}"
 rvm install 2.3 >>setup.log 2>&1
 rvm --default use 2.3 >>setup.log 2>&1
 
-echo "rails.."
+echo "  ${GREEN}installing rails..${NC}"
 gem install rails >>setup.log 2>&1
 
-echo "heroku.."
+echo "  ${GREEN}installing heroku..${NC}"
 curl -L https://cli-assets.heroku.com/apt/release.key | sudo apt-key add - >>setup.log 2>&1
 sudo apt-get install -q heroku >>setup.log 2>&1
 
@@ -171,11 +178,11 @@ sudo apt-get -y autoremove >>setup.log 2>&1
 
 #functions
 xinstall () {
-  echo "installing $1"
-  apt-get install -q -y "$1" >> setup.log 2>&1 || echo -e "${RED}$1 not installed${NC}"
+  echo "  ${GREEN}installing $1${NC}"
+  apt-get install -q -y "$1" >> setup.log 2>&1 || echo -e "*** ${RED}$1 not installed${NC} ***"
 }
 binstall () {
-  echo "installing $1"
+  echo "  ${GREEN}installing $1${NC}"
   pkg=$1.deb
   wget -o $pkg $2 >>setup.log 2>&1
   sudo dpkg -i $pkg >>setup.log 2>&1
