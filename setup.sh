@@ -46,7 +46,7 @@ sudo apt-get install -q libdvdread4 >>setup.log 2>&1
 sudo /usr/share/doc/libdvdread4/install-css.sh >>setup.log 2>&1
 
 echo "cli tools.."
-sudo apt-get install -q powertop htop neofetch youtube-dl libcurl3 libav-tools ffmpeg >>setup.log 2>&1
+sudo apt-get install -q powertop htop neofetch youtube-dl libcurl3 libav-tools ffmpeg xclip >>setup.log 2>&1
 
 echo "file compression.."
 sudo apt-get install -q p7zip-rar p7zip-full unace unrar zip unzip sharutils rar uudeview mpack arj cabextract file-roller >>setup.log 2>&1
