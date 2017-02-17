@@ -46,8 +46,9 @@ xinstall primus-libs
 xinstall microcode.ctl
 xinstall intel-microcode
 
-echo "installing codecs..  (everything except flash and ttf)"
-sudo apt-get -y install chromium-codecs-ffmpeg-extra gstreamer0.10-ffmpeg gstreamer1.0-libav gstreamer1.0-plugins-bad gstreamer1.0-plugins-bad-faad gstreamer1.0-plugins-bad-videoparsers gstreamer1.0-plugins-ugly gstreamer1.0-plugins-ugly-amr liba52-0.7.4 libass5 libavcodec-extra libavcodec-ffmpeg-extra56 libavfilter-ffmpeg5 libavformat-ffmpeg56 libavresample-ffmpeg2 libavutil-ffmpeg54 libbasicusageenvironment1 libbluray1 libbs2b0 libcddb2 libchromaprint0 libcrystalhd3 libdc1394-22 libdca0 libde265-0 libdirectfb-1.2-9 libdvbpsi10 libdvdcss2 libebml4v5 libfaad2 libflite1 libfluidsynth1 libgme0 libgroupsock8 libgstreamer-plugins-bad1.0-0 libgtkglext1 libiso9660-8 libkate1 liblivemedia50 libmad0 libmatroska6v5 libmimic0 libmjpegutils-2.1-0 libmms0 libmodplug1 libmp3lame0 libmpcdec6 libmpeg2-4 libmpeg2encpp-2.1-0 libmpg123-0 libmplex2-2.1-0 libmspack0 libofa0 libopenal1 libopencv-calib3d2.4v5 libopencv-contrib2.4v5 libopencv-core2.4v5 libopencv-features2d2.4v5 libopencv-flann2.4v5 libopencv-highgui2.4v5 libopencv-imgproc2.4v5 libopencv-legacy2.4v5 libopencv-ml2.4v5 libopencv-objdetect2.4v5 libopencv-video2.4v5 libopenjpeg5 libpostproc-ffmpeg53 libproxy-tools libqt5x11extras5 libresid-builder0c2a libschroedinger-1.0-0 libsdl-image1.2 libshine3 libsidplay1v5 libsidplay2v5 libsnappy1v5 libsodium18 libsoundtouch1 libsoxr0 libspandsp2 libsrtp0 libssh-gcrypt-4 libssh2-1 libswresample-ffmpeg1 libswscale-ffmpeg3 libtbb2 libtwolame0 libunshield0 libupnp6 libusageenvironment3 libva-drm1 libva-x11-1 libva1 libvcdinfo0 libvlc5 libvlccore8 libvncclient1 libvo-aacenc0 libvo-amrwbenc0 libwildmidi-config libwildmidi1 libx264-148 libx265-79 libxcb-composite0 libxcb-xv0 libxvidcore4 libzbar0 libzmq5 libzvbi-common libzvbi0 oxideqt-codecs-extra unrar unshield vlc vlc-data vlc-nox vlc-plugin-notify xplayer-mozilla xplayer-plugins-extra  >>setup.log 2>&1
+echo "installing codecs..  remove flash"
+xinstall mint-meta-codecs
+sudo apt-get purge -y -q flashplugin-installer
 
 echo "DVD support.."
 sudo apt-get install -q libdvdread4 >>setup.log 2>&1
