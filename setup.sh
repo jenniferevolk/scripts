@@ -148,7 +148,7 @@ xinstall sqlite3
 xinstall zlib1g
 xinstall zlib1g-dev
 
-echo "  ${GREEN}installing rvm.."
+echo "  ${GREEN}installing rvm..${NC}"
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>setup.log 2>&1
 curl -L get.rvm.io | bash -s stable >>setup.log 2>&1
 
@@ -168,7 +168,8 @@ xinstall atom
 xinstall sublime-text
 
 #settings
-echo "turn on firewall"
+echo "settings"
+echo "  ${GREEN}turn on firewall${NC}"
 sudo ufw enable >>setup.log 2>&1
 
 #cleaning up
