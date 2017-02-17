@@ -20,6 +20,9 @@ echo "  ${GREEN}atom${NC}"
 sudo add-apt-repository -y ppa:webupd8team/atom >>setup.log 2>&1
 echo "  ${GREEN}heroku${NC}"
 sudo add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/apt ./" >>setup.log 2>&1 #heroku
+echo "  ${GREEN}spotify${NC}"
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 >>setup.log 2>&1
+echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list >>setup.log 2>&1
 
 echo "change mirrors & turn on recommends.."
 sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
@@ -92,6 +95,7 @@ xinstall clipit
 xinstall tilda
 xinstall autokey-gtk
 xinstall variety
+xinstall spotify-client
 
 echo "graphics.."
 xinstall blender
