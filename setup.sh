@@ -30,7 +30,6 @@ sudo apt-get update >>setup.log 2>&1
 #install messengers early so we can chat while install continues
 echo "installing messengers.. (we can chat while installing)"
 xinstall telegram
-xinstall hexchat
 binstall skype https://go.skype.com/skypeforlinux-64-alpha.deb
 binstall discord https://discordapp.com/api/download?platform=linux&format=deb
 binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
@@ -93,7 +92,6 @@ xinstall clipit
 xinstall tilda
 xinstall autokey-gtk
 xinstall variety
-xinstall transmission
 
 echo "graphics.."
 xinstall blender
@@ -108,7 +106,6 @@ xinstall zim
 xinstall anki
 xinstall cherrytree
 xinstall thunderbird
-xinstall libreoffice
 
 echo "virtualization.."
 xinstall vagrant
@@ -117,7 +114,6 @@ sudo adduser jennifer vboxusers >>setup.log 2>&1
 
 echo "web browsers.."
 xinstall tor-browser
-xinstall firefox
 binstall chrome https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
 echo "misc development tools.."
@@ -168,7 +164,7 @@ xinstall atom
 xinstall sublime-text
 
 #settings
-echo "settings"
+echo "settings
 echo "  ${GREEN}turn on firewall${NC}"
 sudo ufw enable >>setup.log 2>&1
 
