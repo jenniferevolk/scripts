@@ -155,12 +155,8 @@ echo "heroku.."
 curl -L https://cli-assets.heroku.com/apt/release.key | sudo apt-key add - >>setup.log 2>&1
 sudo apt-get install -q heroku >>setup.log 2>&1
 
-echo "gitkracken.."
 binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
-
-echo "atom.."
 xinstall atom
-echo "sublime.."
 xinstall sublime-text
 
 #settings
