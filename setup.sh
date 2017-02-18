@@ -96,6 +96,7 @@ xinstall tilda
 xinstall autokey-gtk
 xinstall variety
 xinstall spotify-client
+xinstall gnome-do
 
 echo "graphics.."
 xinstall blender
