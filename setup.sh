@@ -49,11 +49,10 @@ xinstall tlp-rdw
 xinstall thermald
 xinstall nvidia-304
 xinstall nvidia-settings
+xinstall nvidia-prime
+xinstall prime-indicator
 xinstall bumblebee
 xinstall bumblebee-nvidia
-xinstall linux-headers-generic
-xinstall primus
-xinstall primus-libs
 xinstall microcode.ctl
 xinstall intel-microcode
 xinstall preload
