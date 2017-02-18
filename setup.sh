@@ -23,6 +23,8 @@ sudo add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/ap
 echo "  ${GREEN}spotify${NC}"
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 >>setup.log 2>&1
 echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list >>setup.log 2>&1
+echo "  ${GREEN}Numix${NC}"
+sudo add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1 #heroku
 
 echo "change mirrors & turn on recommends.."
 sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
@@ -98,6 +100,8 @@ xinstall autokey-gtk
 xinstall variety
 xinstall spotify-client
 xinstall gnome-do
+xinstall numix-icon-theme-circle
+xinstall numix-icon-theme
 
 echo "graphics.."
 xinstall blender
