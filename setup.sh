@@ -54,6 +54,7 @@ xinstall primus
 xinstall primus-libs
 xinstall microcode.ctl
 xinstall intel-microcode
+xinstall preload
 
 echo "codecs..  remove flash"
 xinstall mint-meta-codecs
