@@ -38,7 +38,7 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50
 echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list >>setup.log 2>&1
 echo "  ${GREEN}Numix${NC}"
 add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1 
-echo "  ${GREEN}Numix${NC}"
+echo "  ${GREEN}Sublime${NC}"
 add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
 
 echo "change mirrors & turn on recommends.."
