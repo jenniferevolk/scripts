@@ -170,7 +170,7 @@ xinstall zlib1g-dev
 
 echo "  ${GREEN}installing rvm..${NC}"
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>setup.log 2>&1
-curl -L get.rvm.io | bash -s stable >>setup.log 2>&1
+curl -L -s get.rvm.io | bash -s stable >>setup.log 2>&1
 
 echo "  ${GREEN}installing ruby 2.3..${NC}"
 rvm install 2.3 >>setup.log 2>&1
@@ -180,7 +180,7 @@ echo "  ${GREEN}installing rails..${NC}"
 gem install rails >>setup.log 2>&1
 
 echo "  ${GREEN}installing heroku..${NC}"
-curl -L https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
+curl -L -s https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
 apt-get install -q heroku >>setup.log 2>&1
 
 binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
