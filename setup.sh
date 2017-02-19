@@ -13,6 +13,7 @@ binstall () {
   pkg=$1.deb
   wget -O $pkg $2 >>setup.log 2>&1
   dpkg -i $pkg >>setup.log 2>&1
+  rm -f $pkg >>setup.log 2>&1
 }
 
 echo "Adding repositories.."
