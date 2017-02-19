@@ -6,7 +6,7 @@ NC='\033[0m' # No Color
 #functions
 xinstall () {
   echo "  ${GREEN}installing $1${NC}"
-  apt-get install -q -y "$1" >> setup.log 2>&1 || echo -e "*** ${RED}$1 not installed${NC} ***"
+  apt-get install -q -y "$1" >> setup.log 2>&1 || echo "*** ${RED}$1 not installed${NC} ***"
 }
 binstall () {
   echo "  ${GREEN}installing $1${NC}"
