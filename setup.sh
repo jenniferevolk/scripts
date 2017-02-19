@@ -3,6 +3,18 @@
 RED='\033[0;31m'
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
+#functions
+xinstall () {
+  echo "  ${GREEN}installing $1${NC}"
+  sudo apt-get install -q -y "$1" >> setup.log 2>&1 || echo -e "*** ${RED}$1 not installed${NC} ***"
+}
+binstall () {
+  echo "  ${GREEN}installing $1${NC}"
+  pkg=$1.deb
+  wget -o $pkg $2 >>setup.log 2>&1
+  sudo dpkg -i $pkg >>setup.log 2>&1
+}
+
 echo "Adding repositories.."
 echo "  ${GREEN}tlp${NC}"
 sudo add-apt-repository -y ppa:linrunner/tlp >>setup.log 2>&1
@@ -182,14 +194,4 @@ echo "cleaning up.."
 sudo apt-get clean >>setup.log 2>&1
 sudo apt-get -y autoremove >>setup.log 2>&1
 
-#functions
-xinstall () {
-  echo "  ${GREEN}installing $1${NC}"
-  apt-get install -q -y "$1" >> setup.log 2>&1 || echo -e "*** ${RED}$1 not installed${NC} ***"
-}
-binstall () {
-  echo "  ${GREEN}installing $1${NC}"
-  pkg=$1.deb
-  wget -o $pkg $2 >>setup.log 2>&1
-  sudo dpkg -i $pkg >>setup.log 2>&1
-}
+
