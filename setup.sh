@@ -62,10 +62,9 @@ echo "hardware stuffs..."
 xinstall tlp
 xinstall tlp-rdw
 xinstall thermald
-xinstall nvidia-304
+xinstall nvidia-367
 xinstall nvidia-settings
 xinstall nvidia-prime
-xinstall prime-indicator
 xinstall bumblebee
 xinstall bumblebee-nvidia
 xinstall microcode.ctl
