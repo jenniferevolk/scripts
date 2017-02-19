@@ -188,7 +188,7 @@ xinstall atom
 xinstall sublime-text
 
 #settings
-echo "settings
+echo "settings"
 echo "  ${GREEN}turn on firewall${NC}"
 ufw enable >>setup.log 2>&1
 
