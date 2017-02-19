@@ -11,7 +11,7 @@ xinstall () {
 binstall () {
   echo "  ${GREEN}installing $1${NC}"
   pkg=$1.deb
-  wget -O $pkg $2 >>setup.log 2>&1
+  wget -q -O $pkg $2 >>setup.log 2>&1
   dpkg -i $pkg >>setup.log 2>&1
   rm -f $pkg >>setup.log 2>&1
 }
