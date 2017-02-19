@@ -11,7 +11,7 @@ xinstall () {
 binstall () {
   echo "  ${GREEN}installing $1${NC}"
   pkg=$1.deb
-  wget -q -O $pkg $2 >>setup.log 2>&1
+  wget -nv -O $pkg $2 >>setup.log 2>&1
   dpkg -i $pkg >>setup.log 2>&1
   rm -f $pkg >>setup.log 2>&1
 }
@@ -51,7 +51,7 @@ apt-get update >>setup.log 2>&1
 echo "installing messengers.. (we can chat while installing)"
 xinstall telegram
 binstall skype https://go.skype.com/skypeforlinux-64-alpha.deb
-binstall discord https://discordapp.com/api/download?platform=linux&format=deb
+binstall discord "https://discordapp.com/api/download?platform=linux&format=deb"
 binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
 
 
