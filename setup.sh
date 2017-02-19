@@ -6,44 +6,44 @@ NC='\033[0m' # No Color
 #functions
 xinstall () {
   echo "  ${GREEN}installing $1${NC}"
-  sudo apt-get install -q -y "$1" >> setup.log 2>&1 || echo -e "*** ${RED}$1 not installed${NC} ***"
+  apt-get install -q -y "$1" >> setup.log 2>&1 || echo -e "*** ${RED}$1 not installed${NC} ***"
 }
 binstall () {
   echo "  ${GREEN}installing $1${NC}"
   pkg=$1.deb
   wget -o $pkg $2 >>setup.log 2>&1
-  sudo dpkg -i $pkg >>setup.log 2>&1
+  dpkg -i $pkg >>setup.log 2>&1
 }
 
 echo "Adding repositories.."
 echo "  ${GREEN}tlp${NC}"
-sudo add-apt-repository -y ppa:linrunner/tlp >>setup.log 2>&1
+add-apt-repository -y ppa:linrunner/tlp >>setup.log 2>&1
 echo "  ${GREEN}variety${NC}"
-sudo add-apt-repository -y ppa:peterlevi/ppa >>setup.log 2>&1
+add-apt-repository -y ppa:peterlevi/ppa >>setup.log 2>&1
 echo "  ${GREEN}telegram${NC}"
-sudo add-apt-repository -y ppa:atareao/telegram >>setup.log 2>&1
+add-apt-repository -y ppa:atareao/telegram >>setup.log 2>&1
 echo "  ${GREEN}neofetch${NC}"
-sudo add-apt-repository -y ppa:dawidd0811/neofetch >>setup.log 2>&1
+add-apt-repository -y ppa:dawidd0811/neofetch >>setup.log 2>&1
 echo "  ${GREEN}tor browser${NC}"
-sudo add-apt-repository -y ppa:webupd8team/tor-browser >>setup.log 2>&1
+add-apt-repository -y ppa:webupd8team/tor-browser >>setup.log 2>&1
 echo "  ${GREEN}youtube-dl${NC}"
-sudo add-apt-repository -y ppa:nilarimogard/webupd8 >>setup.log 2>&1
+add-apt-repository -y ppa:nilarimogard/webupd8 >>setup.log 2>&1
 echo "  ${GREEN}atom${NC}"
-sudo add-apt-repository -y ppa:webupd8team/atom >>setup.log 2>&1
+add-apt-repository -y ppa:webupd8team/atom >>setup.log 2>&1
 echo "  ${GREEN}heroku${NC}"
-sudo add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/apt ./" >>setup.log 2>&1 #heroku
+add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/apt ./" >>setup.log 2>&1 #heroku
 echo "  ${GREEN}spotify${NC}"
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 >>setup.log 2>&1
-echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list >>setup.log 2>&1
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 >>setup.log 2>&1
+echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list >>setup.log 2>&1
 echo "  ${GREEN}Numix${NC}"
-sudo add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1 #heroku
+add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1 #heroku
 
 echo "change mirrors & turn on recommends.."
-sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
-sudo sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
-sudo sed -i s/"false"/"true"/g /etc/apt/apt.conf.d/00recommends >>setup.log 2>&1
+sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
+sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
+sed -i s/"false"/"true"/g /etc/apt/apt.conf.d/00recommends >>setup.log 2>&1
 
-sudo apt-get update >>setup.log 2>&1
+apt-get update >>setup.log 2>&1
 #install messengers early so we can chat while install continues
 echo "installing messengers.. (we can chat while installing)"
 xinstall telegram
@@ -53,7 +53,7 @@ binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
 
 
 echo "running updates..."
-sudo apt-get -y upgrade >>setup.log 2>&1
+apt-get -y upgrade >>setup.log 2>&1
 
 echo "hardware stuffs..."
 xinstall tlp
@@ -71,11 +71,11 @@ xinstall preload
 
 echo "codecs..  remove flash"
 xinstall mint-meta-codecs
-sudo apt-get purge -y -q flashplugin-installer
+apt-get purge -y -q flashplugin-installer
 
 echo "DVD support.."
-sudo apt-get install -q libdvdread4 >>setup.log 2>&1
-sudo /usr/share/doc/libdvdread4/install-css.sh >>setup.log 2>&1
+apt-get install -q libdvdread4 >>setup.log 2>&1
+/usr/share/doc/libdvdread4/install-css.sh >>setup.log 2>&1
 
 echo "cli tools.."
 xinstall powertop
@@ -131,7 +131,7 @@ xinstall thunderbird
 echo "virtualization.."
 xinstall vagrant
 xinstall virtualbox-qt
-sudo adduser jennifer vboxusers >>setup.log 2>&1
+adduser jennifer vboxusers >>setup.log 2>&1
 
 echo "web browsers.."
 xinstall tor-browser
@@ -177,8 +177,8 @@ echo "  ${GREEN}installing rails..${NC}"
 gem install rails >>setup.log 2>&1
 
 echo "  ${GREEN}installing heroku..${NC}"
-curl -L https://cli-assets.heroku.com/apt/release.key | sudo apt-key add - >>setup.log 2>&1
-sudo apt-get install -q heroku >>setup.log 2>&1
+curl -L https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
+apt-get install -q heroku >>setup.log 2>&1
 
 binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
 xinstall atom
@@ -187,11 +187,11 @@ xinstall sublime-text
 #settings
 echo "settings
 echo "  ${GREEN}turn on firewall${NC}"
-sudo ufw enable >>setup.log 2>&1
+ufw enable >>setup.log 2>&1
 
 #cleaning up
 echo "cleaning up.."
-sudo apt-get clean >>setup.log 2>&1
-sudo apt-get -y autoremove >>setup.log 2>&1
+apt-get clean >>setup.log 2>&1
+apt-get -y autoremove >>setup.log 2>&1
 
 
