@@ -71,7 +71,7 @@ xinstall preload
 
 echo "codecs..  remove flash"
 xinstall mint-meta-codecs
-apt-get purge -y -q flashplugin-installer
+apt-get purge -y -q flashplugin-installer >>setup.log 2>&1
 
 echo "DVD support.."
 apt-get install -q libdvdread4 >>setup.log 2>&1
