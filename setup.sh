@@ -42,9 +42,13 @@ echo "  ${GREEN}Sublime${NC}"
 add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
 
 echo "change mirrors & turn on recommends.."
+
+#for mint
 sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 sed -i s/"false"/"true"/g /etc/apt/apt.conf.d/00recommends >>setup.log 2>&1
+#for ubuntu
+sed -i s/"us.archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list >>setup.log 2>&1
 
 apt-get update >>setup.log 2>&1
 #install messengers early so we can chat while install continues
