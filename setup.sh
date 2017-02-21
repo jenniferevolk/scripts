@@ -6,7 +6,7 @@ NC='\033[0m' # No Color
 #functions
 xinstall () {
   echo "  ${GREEN}installing $1${NC}"
-  apt-get install -q -y "$1" >> setup.log 2>&1 || echo "*** ${RED}$1 not installed${NC} ***"
+  apt-get install -q -y --install-suggests "$1" >> setup.log 2>&1 || echo "*** ${RED}$1 not installed${NC} ***"
 }
 binstall () {
   echo "  ${GREEN}installing $1${NC}"
@@ -46,7 +46,6 @@ echo "change mirrors & turn on recommends.."
 #for mint
 sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
-sed -i s/"false"/"true"/g /etc/apt/apt.conf.d/00recommends >>setup.log 2>&1
 #for ubuntu
 sed -i s/"us.archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list >>setup.log 2>&1
 
