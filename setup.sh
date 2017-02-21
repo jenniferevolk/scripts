@@ -1,4 +1,6 @@
 #!/bin/sh
+clear
+echo "Laptop Setup"
 #color codes
 RED='\033[0;31m'
 GREEN='\033[1;32m'
