@@ -65,7 +65,6 @@ apt-get -y upgrade >>setup.log 2>&1
 
 echo "hardware stuffs..."
 xinstall tlp
-xinstall tlp-rdw
 xinstall thermald
 xinstall nvidia-367
 xinstall nvidia-settings
