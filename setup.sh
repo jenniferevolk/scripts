@@ -81,8 +81,9 @@ xinstall mint-meta-codecs
 apt-get purge -y -q flashplugin-installer >>setup.log 2>&1
 
 #echo "DVD support.."
-apt-get install -q libdvdread4 >>setup.log 2>&1
-/usr/share/doc/libdvdread4/install-css.sh >>setup.log 2>&1
+#xinstall libdvdread4 
+#xinstall libdvd-pkg
+#dpkg-reconfigure libdvd-pkg
 
 echo "cli tools.."
 xinstall powertop
@@ -185,7 +186,7 @@ gem install rails >>setup.log 2>&1
 
 echo "  ${GREEN}installing heroku..${NC}"
 curl -L -s https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
-apt-get install -q heroku >>setup.log 2>&1
+xinstall heroku
 
 binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
 xinstall atom
