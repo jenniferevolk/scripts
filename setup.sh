@@ -8,7 +8,7 @@ NC='\033[0m' # No Color
 #functions
 xinstall () {
   echo "  ${GREEN}installing $1${NC}"
-  apt-get install -q -y --install-suggests "$1" >> setup.log 2>&1 || echo "*** ${RED}$1 not installed${NC} ***"
+  apt-get install -q -y "$1" >> setup.log 2>&1 || echo "*** ${RED}$1 not installed${NC} ***"
 }
 binstall () {
   echo "  ${GREEN}installing $1${NC}"
@@ -55,9 +55,9 @@ apt-get update >>setup.log 2>&1
 #install messengers early so we can chat while install continues
 echo "installing messengers.. (we can chat while installing)"
 xinstall telegram
-binstall skype https://go.skype.com/skypeforlinux-64-alpha.deb
-binstall discord "https://discordapp.com/api/download?platform=linux&format=deb"
-binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
+#binstall skype https://go.skype.com/skypeforlinux-64-alpha.deb
+#binstall discord "https://discordapp.com/api/download?platform=linux&format=deb"
+#binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
 
 
 echo "running updates..."
@@ -80,7 +80,7 @@ echo "codecs..  remove flash"
 xinstall mint-meta-codecs
 apt-get purge -y -q flashplugin-installer >>setup.log 2>&1
 
-echo "DVD support.."
+#echo "DVD support.."
 apt-get install -q libdvdread4 >>setup.log 2>&1
 /usr/share/doc/libdvdread4/install-css.sh >>setup.log 2>&1
 
