@@ -76,6 +76,8 @@ xinstall microcode.ctl
 xinstall intel-microcode
 xinstall preload
 xinstall linux-generic-hwe-16.04-edge
+echo "setting default mode to intel graphics"
+prime-select intel
 
 echo "codecs..  remove flash"
 xinstall mint-meta-codecs
