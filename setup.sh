@@ -42,8 +42,8 @@ echo "  ${GREEN}Numix${NC}"
 add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1
 echo "  ${GREEN}Sublime${NC}"
 add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
-echo "  ${GREEN}Nvidia drivers${NC}"
-add-apt-repository -y ppa:graphics-drivers/ppa >>setup.log 2>&1
+#echo "  ${GREEN}Nvidia drivers${NC}"
+#add-apt-repository -y ppa:graphics-drivers/ppa >>setup.log 2>&1
 echo "change mirrors & turn on recommends.."
 
 #for mint
@@ -67,17 +67,17 @@ apt-get -y upgrade >>setup.log 2>&1
 echo "hardware stuffs..."
 xinstall tlp
 xinstall thermald
-xinstall nvidia-375
-xinstall nvidia-settings
-xinstall nvidia-prime
-xinstall bumblebee
-xinstall bumblebee-nvidia
+#xinstall nvidia-375
+#xinstall nvidia-settings
+#xinstall nvidia-prime
+#xinstall bumblebee
+#xinstall bumblebee-nvidia
 xinstall microcode.ctl
 xinstall intel-microcode
 xinstall preload
-xinstall linux-generic-hwe-16.04-edge
-echo "setting default mode to intel graphics"
-prime-select intel
+#xinstall linux-generic-hwe-16.04-edge
+#echo "setting default mode to intel graphics"
+#prime-select intel
 
 echo "codecs..  remove flash"
 xinstall mint-meta-codecs
