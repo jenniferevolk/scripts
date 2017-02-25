@@ -186,7 +186,7 @@ gem install rails >>setup.log 2>&1
 
 echo "  ${GREEN}installing heroku..${NC}"
 curl -L -s https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
-xinstall heroku
+apt-get install -q -y --allow-unauthenticated heroku >> setup.log 2>&1 || echo "*** Heroku not installed${NC} ***"
 
 binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
 xinstall atom
