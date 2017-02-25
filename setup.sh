@@ -42,7 +42,8 @@ echo "  ${GREEN}Numix${NC}"
 add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1
 echo "  ${GREEN}Sublime${NC}"
 add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
-
+echo "  ${GREEN}Nvidia drivers${NC}"
+add-apt-repository -y ppa:graphics-drivers/ppa >>setup.log 2>&1
 echo "change mirrors & turn on recommends.."
 
 #for mint
@@ -66,7 +67,7 @@ apt-get -y upgrade >>setup.log 2>&1
 echo "hardware stuffs..."
 xinstall tlp
 xinstall thermald
-xinstall nvidia-367
+xinstall nvidia-375
 xinstall nvidia-settings
 xinstall nvidia-prime
 xinstall bumblebee
