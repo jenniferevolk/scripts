@@ -39,7 +39,7 @@ echo "  ${GREEN}spotify${NC}"
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 >>setup.log 2>&1
 echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list >>setup.log 2>&1
 echo "  ${GREEN}Numix${NC}"
-add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1 
+add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1
 echo "  ${GREEN}Sublime${NC}"
 add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
 
@@ -74,6 +74,7 @@ xinstall bumblebee-nvidia
 xinstall microcode.ctl
 xinstall intel-microcode
 xinstall preload
+xinstall linux-generic-hwe-16.04-edge
 
 echo "codecs..  remove flash"
 xinstall mint-meta-codecs
@@ -199,5 +200,3 @@ ufw enable >>setup.log 2>&1
 echo "cleaning up.."
 apt-get clean >>setup.log 2>&1
 apt-get -y autoremove >>setup.log 2>&1
-
-
