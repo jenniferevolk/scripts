@@ -1,10 +1,11 @@
 #!/bin/sh
 clear
-echo "Laptop Setup"
+echo "Jenn's Laptop Setup"
 #color codes
 RED='\033[0;31m'
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
+
 #functions
 xinstall () {
   echo "  ${GREEN}installing $1${NC}"
@@ -44,15 +45,16 @@ echo "  ${GREEN}Sublime${NC}"
 sudo add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
 #echo "  ${GREEN}Nvidia drivers${NC}"
 #add-apt-repository -y ppa:graphics-drivers/ppa >>setup.log 2>&1
-echo "change mirrors & turn on recommends.."
 
-#for mint
+
+echo "change mirrors & update repositories.."
 sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 sudo sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
-#for ubuntu
-sudo sed -i s/"us.archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list >>setup.log 2>&1
+sudo apt-get update >>setup.log 2>&1
 
-apt-get update >>setup.log 2>&1
+#for ubuntu sudo sed -i s/"us.archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list >>setup.log 2>&1
+
+
 #install messengers early so we can chat while install continues
 echo "installing messengers.. (we can chat while installing)"
 xinstall telegram
@@ -62,22 +64,14 @@ binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
 
 
 echo "running updates..."
-apt-get -y upgrade >>setup.log 2>&1
+sudo apt-get -y upgrade >>setup.log 2>&1
 
 echo "hardware stuffs..."
 xinstall tlp
 xinstall thermald
-#xinstall nvidia-375
-#xinstall nvidia-settings
-#xinstall nvidia-prime
-#xinstall bumblebee
-#xinstall bumblebee-nvidia
 xinstall microcode.ctl
 xinstall intel-microcode
 xinstall preload
-#xinstall linux-generic-hwe-16.04-edge
-#echo "setting default mode to intel graphics"
-#prime-select intel
 
 echo "codecs..  remove flash"
 xinstall mint-meta-codecs
@@ -178,19 +172,19 @@ xinstall zlib1g-dev
 
 echo "  ${GREEN}installing rvm..${NC}"
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>setup.log 2>&1
-curl -L get.rvm.io | bash -s stable >>setup.log 2>&1
+curl -L -s get.rvm.io | bash -s stable >>setup.log 2>&1
 source ~/.rvm/scripts/rvm
-
 
 echo "  ${GREEN}installing ruby 2.3..${NC}"
 rvm install 2.3 >>setup.log 2>&1
 rvm --default use 2.3 >>setup.log 2>&1
+source ~/.rvm/scripts/rvm
 
 echo "  ${GREEN}installing rails..${NC}"
 gem install rails >>setup.log 2>&1
 
 echo "  ${GREEN}installing heroku..${NC}"
-curl -L https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
+curl -L -s https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
 sudo apt-get install -q -y --allow-unauthenticated heroku >> setup.log 2>&1 || echo "*** Heroku not installed${NC} ***"
 
 binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
