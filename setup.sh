@@ -8,49 +8,49 @@ NC='\033[0m' # No Color
 #functions
 xinstall () {
   echo "  ${GREEN}installing $1${NC}"
-  apt-get install -q -y "$1" >> setup.log 2>&1 || echo "*** ${RED}$1 not installed${NC} ***"
+  sudo apt-get install -q -y "$1" >> setup.log 2>&1 || echo "*** ${RED}$1 not installed${NC} ***"
 }
 binstall () {
   echo "  ${GREEN}installing $1${NC}"
   pkg=$1.deb
   wget -nv -O $pkg $2 >>setup.log 2>&1
-  dpkg -i $pkg >>setup.log 2>&1
+  sudo dpkg -i $pkg >>setup.log 2>&1
   rm -f $pkg >>setup.log 2>&1
 }
 
 echo "Adding repositories.."
 echo "  ${GREEN}tlp${NC}"
-add-apt-repository -y ppa:linrunner/tlp >>setup.log 2>&1
+sudo add-apt-repository -y ppa:linrunner/tlp >>setup.log 2>&1
 echo "  ${GREEN}variety${NC}"
-add-apt-repository -y ppa:peterlevi/ppa >>setup.log 2>&1
+sudo add-apt-repository -y ppa:peterlevi/ppa >>setup.log 2>&1
 echo "  ${GREEN}telegram${NC}"
-add-apt-repository -y ppa:atareao/telegram >>setup.log 2>&1
+sudo add-apt-repository -y ppa:atareao/telegram >>setup.log 2>&1
 echo "  ${GREEN}neofetch${NC}"
-add-apt-repository -y ppa:dawidd0811/neofetch >>setup.log 2>&1
+sudo add-apt-repository -y ppa:dawidd0811/neofetch >>setup.log 2>&1
 echo "  ${GREEN}tor browser${NC}"
-add-apt-repository -y ppa:webupd8team/tor-browser >>setup.log 2>&1
+sudo add-apt-repository -y ppa:webupd8team/tor-browser >>setup.log 2>&1
 echo "  ${GREEN}youtube-dl${NC}"
-add-apt-repository -y ppa:nilarimogard/webupd8 >>setup.log 2>&1
+sudo add-apt-repository -y ppa:nilarimogard/webupd8 >>setup.log 2>&1
 echo "  ${GREEN}atom${NC}"
-add-apt-repository -y ppa:webupd8team/atom >>setup.log 2>&1
+sudo add-apt-repository -y ppa:webupd8team/atom >>setup.log 2>&1
 echo "  ${GREEN}heroku${NC}"
-add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/apt ./" >>setup.log 2>&1 #heroku
+sudo add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/apt ./" >>setup.log 2>&1 #heroku
 echo "  ${GREEN}spotify${NC}"
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 >>setup.log 2>&1
 echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list >>setup.log 2>&1
 echo "  ${GREEN}Numix${NC}"
-add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1
+sudo add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1
 echo "  ${GREEN}Sublime${NC}"
-add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
+sudo add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
 #echo "  ${GREEN}Nvidia drivers${NC}"
 #add-apt-repository -y ppa:graphics-drivers/ppa >>setup.log 2>&1
 echo "change mirrors & turn on recommends.."
 
 #for mint
-sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
-sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
+sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
+sudo sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 #for ubuntu
-sed -i s/"us.archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list >>setup.log 2>&1
+sudo sed -i s/"us.archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list >>setup.log 2>&1
 
 apt-get update >>setup.log 2>&1
 #install messengers early so we can chat while install continues
@@ -178,7 +178,9 @@ xinstall zlib1g-dev
 
 echo "  ${GREEN}installing rvm..${NC}"
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>setup.log 2>&1
-curl -L -s get.rvm.io | bash -s stable >>setup.log 2>&1
+curl -L get.rvm.io | bash -s stable >>setup.log 2>&1
+source ~/.rvm/scripts/rvm
+
 
 echo "  ${GREEN}installing ruby 2.3..${NC}"
 rvm install 2.3 >>setup.log 2>&1
@@ -188,8 +190,8 @@ echo "  ${GREEN}installing rails..${NC}"
 gem install rails >>setup.log 2>&1
 
 echo "  ${GREEN}installing heroku..${NC}"
-curl -L -s https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
-apt-get install -q -y --allow-unauthenticated heroku >> setup.log 2>&1 || echo "*** Heroku not installed${NC} ***"
+curl -L https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
+sudo apt-get install -q -y --allow-unauthenticated heroku >> setup.log 2>&1 || echo "*** Heroku not installed${NC} ***"
 
 binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
 xinstall atom
@@ -202,5 +204,5 @@ ufw enable >>setup.log 2>&1
 
 #cleaning up
 echo "cleaning up.."
-apt-get clean >>setup.log 2>&1
-apt-get -y autoremove >>setup.log 2>&1
+sudo apt-get clean >>setup.log 2>&1
+sudo apt-get -y autoremove >>setup.log 2>&1
