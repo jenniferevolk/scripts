@@ -10,10 +10,16 @@ NC='\033[0m' # No Color
 #functions
 xinstall () {
   echo "  ${GREEN}installing $1${NC}"
+  echo "">>setup.log
+  echo "========= installing $1 ==========" >> setup.log
+  echo "">>setup.log
   sudo apt-get install -q -y "$1" >> setup.log 2>&1 || echo "*** ${RED}$1 not installed${NC} ***"
 }
 binstall () {
   echo "  ${GREEN}installing $1${NC}"
+  echo "">>setup.log
+  echo "========= installing $1 ==========" >> setup.log
+  echo "">>setup.log
   pkg=$1.deb
   wget -nv -O $pkg $2 >>setup.log 2>&1
   sudo dpkg -i $pkg >>setup.log 2>&1
@@ -105,7 +111,6 @@ xinstall uudeview
 xinstall mpack
 xinstall arj
 xinstall cabextract
-xinstall file-roller
 
 echo "desktop tools.."
 xinstall redshift-gtk
