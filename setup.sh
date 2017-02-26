@@ -1,6 +1,7 @@
 #!/bin/sh
 clear
 echo "Jenn's Laptop Setup"
+sudo -v
 #color codes
 RED='\033[0;31m'
 GREEN='\033[1;32m'
@@ -37,8 +38,8 @@ sudo add-apt-repository -y ppa:webupd8team/atom >>setup.log 2>&1
 echo "  ${GREEN}heroku${NC}"
 sudo add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/apt ./" >>setup.log 2>&1 #heroku
 echo "  ${GREEN}spotify${NC}"
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 >>setup.log 2>&1
-echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list >>setup.log 2>&1
+sudo apt-add-repository -y "deb http://repository.spotify.com stable non-free" >>setup.log 2>&1
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D2C19886 >>setup.log 2>&1
 echo "  ${GREEN}Numix${NC}"
 sudo add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1
 echo "  ${GREEN}Sublime${NC}"
@@ -51,9 +52,8 @@ echo "change mirrors & update repositories.."
 sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 sudo sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 sudo apt-get update >>setup.log 2>&1
-
-#for ubuntu sudo sed -i s/"us.archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list >>setup.log 2>&1
-
+sudo sed -i s/"us.archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list >>setup.log 2>&1
+sudo apt-get update >>setup.log 2>&1
 
 #install messengers early so we can chat while install continues
 echo "installing messengers.. (we can chat while installing)"
