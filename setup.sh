@@ -114,6 +114,7 @@ xinstall cabextract
 
 echo "desktop tools.."
 xinstall redshift-gtk
+xinstall geoclue-2.0
 xinstall plank
 xinstall clipit
 xinstall tilda
@@ -175,19 +176,15 @@ xinstall sqlite3
 xinstall zlib1g
 xinstall zlib1g-dev
 
+
 echo "  ${GREEN}installing rvm..${NC}"
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>setup.log 2>&1
-curl -L -s get.rvm.io | bash -s stable >>setup.log 2>&1
-source ~/.rvm/scripts/rvm
-
-echo "  ${GREEN}installing ruby 2.3..${NC}"
-rvm install 2.3 >>setup.log 2>&1
-rvm --default use 2.3 >>setup.log 2>&1
+curl -L -s get.rvm.io | bash -s stable --ruby >>setup.log 2>&1
 source ~/.rvm/scripts/rvm
 
 echo "  ${GREEN}installing rails..${NC}"
-gem install rails >>setup.log 2>&1
-
+sudo gem install rails >>setup.log 2>&1
+sudo gem install bundler >>setup.log 2>&1
 echo "  ${GREEN}installing heroku..${NC}"
 curl -L -s https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
 sudo apt-get install -q -y --allow-unauthenticated heroku >> setup.log 2>&1 || echo "*** Heroku not installed${NC} ***"
