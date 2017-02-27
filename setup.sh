@@ -27,6 +27,7 @@ binstall () {
 }
 
 echo "Adding repositories.."
+sudo apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common >>setup.log 2>&1
 echo "  ${GREEN}tlp${NC}"
 sudo add-apt-repository -y ppa:linrunner/tlp >>setup.log 2>&1
 echo "  ${GREEN}variety${NC}"
@@ -52,9 +53,11 @@ echo "  ${GREEN}Arc theme${NC}"
 sudo add-apt-repository -y ppa:noobslab/themes >>setup.log 2>&1
 echo "  ${GREEN}Sublime${NC}"
 sudo add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
+echo "  ${GREEN}Docker${NC}"
+curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add - >>setup.log 2>&1
+
 #echo "  ${GREEN}Nvidia drivers${NC}"
 #add-apt-repository -y ppa:graphics-drivers/ppa >>setup.log 2>&1
-
 
 echo "change mirrors & update repositories.."
 sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
@@ -147,7 +150,9 @@ xinstall thunderbird
 echo "virtualization.."
 xinstall vagrant
 xinstall virtualbox-qt
+xinstall virtualbox-guest-additions-iso
 adduser jennifer vboxusers >>setup.log 2>&1
+xinstall docker-engine
 
 echo "web browsers.."
 xinstall tor-browser
@@ -181,15 +186,6 @@ xinstall sqlite3
 xinstall zlib1g
 xinstall zlib1g-dev
 
-
-echo "  ${GREEN}installing rvm..${NC}"
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>setup.log 2>&1
-curl -L -s get.rvm.io | bash -s stable --ruby >>setup.log 2>&1
-source ~/.rvm/scripts/rvm
-
-echo "  ${GREEN}installing rails..${NC}"
-sudo gem install rails >>setup.log 2>&1
-sudo gem install bundler >>setup.log 2>&1
 echo "  ${GREEN}installing heroku..${NC}"
 curl -L -s https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
 sudo apt-get install -q -y --allow-unauthenticated heroku >> setup.log 2>&1 || echo "*** Heroku not installed${NC} ***"
@@ -198,8 +194,25 @@ binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
 xinstall atom
 xinstall sublime-text
 
+echo "installing rails.."
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>setup.log 2>&1
+curl -L -s get.rvm.io | bash -s stable --ruby >>setup.log 2>&1
+source ~/.rvm/scripts/rvm
+rvm version >> $rvm
+echo "       ${GREEN} $rvm ${NC}"
+ruby --version >> $ruby
+echo "       ${GREEN} $ruby ${NC}"
+
+sudo gem install rails >>setup.log 2>&1
+rails version >> $rails
+echo "       ${GREEN} $rails ${NC}"
+
+sudo gem install bundler >>setup.log 2>&1
+bundler version >> $bundler
+echo "       ${GREEN} $bundler ${NC}"
+
 #settings
-echo "settings"
+echo "settings.."
 echo "  ${GREEN}turn on firewall${NC}"
 ufw enable >>setup.log 2>&1
 
