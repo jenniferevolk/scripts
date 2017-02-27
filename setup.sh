@@ -46,8 +46,10 @@ sudo add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/ap
 echo "  ${GREEN}spotify${NC}"
 sudo apt-add-repository -y "deb http://repository.spotify.com stable non-free" >>setup.log 2>&1
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D2C19886 >>setup.log 2>&1
-echo "  ${GREEN}Numix${NC}"
+echo "  ${GREEN}Numix icons${NC}"
 sudo add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1
+echo "  ${GREEN}Arc theme${NC}"
+sudo add-apt-repository -y ppa:noobslab/themes >>setup.log 2>&1
 echo "  ${GREEN}Sublime${NC}"
 sudo add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
 #echo "  ${GREEN}Nvidia drivers${NC}"
@@ -122,8 +124,11 @@ xinstall autokey-gtk
 xinstall variety
 xinstall spotify-client
 xinstall gnome-do
+
+echo "icons and theme.."
 xinstall numix-icon-theme-circle
-xinstall numix-icon-theme
+xinstall numix-folders
+xinstall arc-theme
 
 echo "graphics.."
 xinstall blender
