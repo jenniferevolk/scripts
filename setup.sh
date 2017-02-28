@@ -1,21 +1,31 @@
 #!/bin/sh
-clear
-echo "Jenn's Laptop Setup"
+#Jennifer's laptop setup script
+
 sudo -v
+clear
+
 #color codes
 RED='\033[0;31m'
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
+echo "Jenn's Laptop Setup"
+echo ""
+echo "installing apt-fast"
 sudo apt-get install -y aria2 git >> setup.log 2>&1
 git clone https://github.com/ilikenwf/apt-fast /tmp/apt-fast >> setup.log 2>&1
 sudo cp /tmp/apt-fast/apt-fast /usr/bin >> setup.log 2>&1
 sudo chmod +x /usr/bin/apt-fast >> setup.log 2>&1
 sudo cp /tmp/apt-fast/apt-fast.conf /etc >> setup.log 2>&1
+
+echo "set faster mirrors"
 sudo sh -c "echo "MIRRORS=( 'http://mirror.network32.net/ubuntu/,http://mirror.math.ucdavis.edu/ubuntu/,http://uk-mirrors.evowise.com/ubuntu/, http://mirrors.xmission.com/ubuntu/' )" >> /etc/apt-fast.conf" >> setup.log 2>&1
+sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
+sudo sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 
 
-#functions
+################### functions #########################
+
 xinstall () {
   echo "  ${GREEN}installing $1${NC}"
   echo "">>setup.log
@@ -34,64 +44,64 @@ binstall () {
   rm -f $pkg >>setup.log 2>&1
 }
 
+repo(){
+    sudo add-apt-repository -y $2 2>&1
+    echo "  ${GREEN} $1 ${NC}"
+}
+
+
+################### Repositories #########################
+
 echo "Adding repositories.."
 sudo apt-fast install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common >>setup.log 2>&1
-echo "  ${GREEN}tlp${NC}"
-sudo add-apt-repository -y ppa:linrunner/tlp >>setup.log 2>&1
-echo "  ${GREEN}variety${NC}"
-sudo add-apt-repository -y ppa:peterlevi/ppa >>setup.log 2>&1
-echo "  ${GREEN}telegram${NC}"
-sudo add-apt-repository -y ppa:atareao/telegram >>setup.log 2>&1
-echo "  ${GREEN}neofetch${NC}"
-sudo add-apt-repository -y ppa:dawidd0811/neofetch >>setup.log 2>&1
-echo "  ${GREEN}tor browser${NC}"
-sudo add-apt-repository -y ppa:webupd8team/tor-browser >>setup.log 2>&1
-echo "  ${GREEN}youtube-dl${NC}"
-sudo add-apt-repository -y ppa:nilarimogard/webupd8 >>setup.log 2>&1
-echo "  ${GREEN}atom${NC}"
-sudo add-apt-repository -y ppa:webupd8team/atom >>setup.log 2>&1
-echo "  ${GREEN}heroku${NC}"
-sudo add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/apt ./" >>setup.log 2>&1 
+
+#keys
+#heroku
 curl -SsL https://cli-assets.heroku.com/apt/release.key | sudo apt-key add - >>setup.log 2>&1
-echo "  ${GREEN}spotify${NC}"
-sudo apt-add-repository -y "deb http://repository.spotify.com stable non-free" >>setup.log 2>&1
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D2C19886 >>setup.log 2>&1
-echo "  ${GREEN}Numix icons${NC}"
-sudo add-apt-repository -y ppa:numix/ppa >>setup.log 2>&1
-echo "  ${GREEN}Arc theme${NC}"
-sudo add-apt-repository -y ppa:noobslab/themes >>setup.log 2>&1
-echo "  ${GREEN}Sublime${NC}"
-sudo add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
-echo "  ${GREEN}Docker${NC}"
-sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D >>setup.log 2>&1
-sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' >>setup.log 2>&1
+#spotify
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D2C19886 >>setup.log 2>&1 
+#docker
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D >>setup.log 2>&1 
 
-echo "change mirrors & update repositories.."
-sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
-sudo sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
-sudo apt-fast update >>setup.log 2>&1
+repo tlp        ppa:linrunner/tlp
+repo variety    ppa:peterlevi/ppa
+repo telegram   ppa:atareao/telegram
+repo neofetch   ppa:dawidd0811/neofetch
+repo tor        ppa:webupd8team/tor-browser
+repo youtube-dl ppa:nilarimogard/webupd8
+repo atom       ppa:webupd8team/atom
+repo numix      ppa:numix/ppa
+repo arc        ppa:noobslab/themes
+repo sublime    ppa:webupd8team/sublime-text-2
+repo docker     "deb https://apt.dockerproject.org/repo ubuntu-xenial main"
+repo heroku     "deb https://cli-assets.heroku.com/branches/stable/apt ./"
+repo spotify    "deb http://repository.spotify.com stable non-free"
 
+sudo apt-get update >>setup.log 2>&1
+
+
+################### software #########################
+echo "Install software"
+echo ""
 #install messengers early so we can chat while install continues
 echo "installing messengers.. (we can chat while installing)"
+binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
 xinstall telegram
 binstall skype https://go.skype.com/skypeforlinux-64-alpha.deb
 binstall discord "https://discordapp.com/api/download?platform=linux&format=deb"
-binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
 
-
-echo "running updates..."
+echo "upgrading..."
 sudo apt-fast -y upgrade >>setup.log 2>&1
 
-echo "hardware stuffs..."
+echo "system stuff..."
 xinstall tlp
 xinstall thermald
 xinstall microcode.ctl
 xinstall intel-microcode
 xinstall preload
 
-echo "codecs..  remove flash"
+echo "codecs.."
 xinstall mint-meta-codecs
-sudo apt-get purge -y -q flashplugin-installer >>setup.log 2>&1
 
 echo "cli tools.."
 xinstall powertop
@@ -149,7 +159,6 @@ echo "virtualization.."
 xinstall vagrant
 xinstall virtualbox-qt
 xinstall virtualbox-guest-additions-iso
-adduser jennifer vboxusers >>setup.log 2>&1
 xinstall linux-image-generic
 xinstall linux-image-extra-virtual
 xinstall docker-engine
@@ -189,14 +198,12 @@ xinstall libgdbm-dev
 xinstall libncurses5-dev
 xinstall libffi-dev
 xinstall heroku
-
-
 binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
 xinstall atom
 xinstall sublime-text
 
-echo "installing rails.."
-echo "${GREEN}"
+echo "installing rails..${GREEN}"
+
 gpg --keyserver hkp://pgp.mit.edu --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>setup.log 2>&1
 curl -sSL https://get.rvm.io | bash -s stable >>setup.log 2>&1
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
@@ -209,13 +216,24 @@ sudo gem install rails -v 5.0.1 >>setup.log 2>&1
 rails version
 sudo gem install bundler >>setup.log 2>&1
 bundler version
+
 echo "${NC}"
-#settings
+
+################### settings #########################
+
 echo "settings.."
+
 echo "  ${GREEN}turn on firewall${NC}"
 sudo ufw enable >>setup.log 2>&1
 
-#cleaning up
+echo "  ${GREEN}add user to vbox group ${NC}"
+sudo adduser $USER vboxusers >>setup.log 2>&1
+################### clean up #########################
+
 echo "cleaning up.."
+echo "  ${GREEN}remove flash${NC}"
+sudo apt-get purge -y -q flashplugin-installer >>setup.log 2>&1
+
+echo "  ${GREEN}clear caches${NC}"
 sudo apt-get clean >>setup.log 2>&1
 sudo apt-get -y autoremove >>setup.log 2>&1
