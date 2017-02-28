@@ -120,7 +120,6 @@ xinstall arc-theme
 
 echo "graphics.."
 xinstall blender
-xinstall gimp
 xinstall shutter
 xinstall cheese
 xinstall pinta
@@ -216,7 +215,7 @@ echo "special repo installs"
 apt-get -y -q "tlp variety telegram neofetch tor-browser youtube-dl atom sublime-text docker heroku mate-tweak spotify-client numix-icon-theme-circle numix-folders arc-theme tor-browser docker-engine" >>setup.log 2>&1
 
 echo "lets try warp speed (mass install): warp speed....engage!"
-apt-fast -q -y install thermald microcode.ctl intel-microcode preload mint-meta-codecs powertop htop libcurl3 libav-tools ffmpeg xclip p7zip-rar p7zip-full unace unrar zip unzip sharutils rar uudeview mpack arj cabextract redshift-gtk geoclue-2.0 clipit tilda autokey-gtk mate-menu maximus libtopmenu-client-gtk2-0 libtopmenu-client-gtk3-0 mate-applet-topmenu plank mate-indicator-applet mate-dock-applet synapse indicator-application-gtk2 indicator-sound-gtk2 blender gimp shutter cheese pinta zim anki cherrytree vagrant virtualbox-qt virtualbox-guest-additions-iso linux-image-generic linux-image-extra-virtual chromium-browser autoconf automake bison build-essential curl git-core libapr1 libaprutil1 libc6-dev libltdl-dev libreadline6 libreadline6-dev libsqlite3-0 libsqlite3-dev libssl-dev libtool libxml2-dev libxslt-dev libxslt1-dev libyaml-dev ncurses-dev nodejs openssl sqlite3 zlib1g zlib1g-dev libgdbm-dev libncurses5-dev libffi-dev sublime-text || slowinstall
+apt-fast -q -y install thermald microcode.ctl intel-microcode preload mint-meta-codecs powertop htop libcurl3 libav-tools ffmpeg xclip p7zip-rar p7zip-full unace unrar zip unzip sharutils rar uudeview mpack arj cabextract redshift-gtk geoclue-2.0 clipit tilda autokey-gtk mate-menu maximus libtopmenu-client-gtk2-0 libtopmenu-client-gtk3-0 mate-applet-topmenu plank mate-indicator-applet mate-dock-applet synapse indicator-application-gtk2 indicator-sound-gtk2 blender shutter cheese pinta zim anki cherrytree vagrant virtualbox-qt virtualbox-guest-additions-iso linux-image-generic linux-image-extra-virtual chromium-browser autoconf automake bison build-essential curl git-core libapr1 libaprutil1 libc6-dev libltdl-dev libreadline6 libreadline6-dev libsqlite3-0 libsqlite3-dev libssl-dev libtool libxml2-dev libxslt-dev libxslt1-dev libyaml-dev ncurses-dev nodejs openssl sqlite3 zlib1g zlib1g-dev libgdbm-dev libncurses5-dev libffi-dev sublime-text || slowinstall
 
 echo "repo installs finished"
 
