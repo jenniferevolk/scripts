@@ -21,7 +21,8 @@ sudo chmod +x /usr/bin/apt-fast >> setup.log 2>&1
 sudo cp /tmp/apt-fast/apt-fast.conf /etc >> setup.log 2>&1
 
 echo "set faster mirrors"
-sudo sh -c "echo "MIRRORS=( 'http://mirror.network32.net/ubuntu/,http://mirror.math.ucdavis.edu/ubuntu/,http://uk-mirrors.evowise.com/ubuntu/, http://mirrors.xmission.com/ubuntu/' )" >> /etc/apt-fast.conf" >> setup.log 2>&1
+MIRRORS="MIRRORS=( 'http://mirror.os6.org/ubuntu/,http://mirror.math.ucdavis.edu/ubuntu/,http://mirrors.us.kernel.org/ubuntu/, http://mirrors.xmission.com/ubuntu/' )"
+sudo sh -c "echo $MIRRORS  >> /etc/apt-fast.conf" >> setup.log 2>&1
 sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 sudo sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 
@@ -47,7 +48,7 @@ binstall () {
 }
 
 repo(){
-    sudo add-apt-repository -y $2 2>&1
+    sudo add-apt-repository -y $2 >>setup.log 2>&1
     echo "  ${GREEN} $1 ${NC}"
 }
 
