@@ -155,15 +155,6 @@ xinstall synapse
 xinstall indicator-application-gtk2
 xinstall indicator-sound-gtk2
 
-wget https://launchpad.net/ubuntu/+archive/primary/+files/ubuntu-mate-settings_16.04.5.3.tar.xz >>setup.log 2>&1
-
-sudo tar --strip-components=1 -xf ubuntu-mate-settings_16.04.5.3.tar.xz -C / ubuntu-mate-settings-xenial/usr/share/mate-panel/layouts >>setup.log 2>&1
-sudo tar --strip-components=1 -xf ubuntu-mate-settings_16.04.5.3.tar.xz -C / ubuntu-mate-settings-xenial/usr/share/mate/autostart/tilda.desktop >>setup.log 2>&1
-sudo tar --strip-components=1 -xf ubuntu-mate-settings_16.04.5.3.tar.xz -C / ubuntu-mate-settings-xenial/usr/share/plank/themes/Ubuntu-MATE/ >>setup.log 2>&1
-
-rm ubuntu-mate-settings_16.04.5.3.tar.xz
-
-
 echo "icons and theme.."
 xinstall numix-icon-theme-circle
 xinstall numix-folders
