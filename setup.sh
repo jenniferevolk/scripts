@@ -1,5 +1,7 @@
 #!/bin/sh
+#setup.sh
 #Jennifer's laptop setup script
+#by Jennifer E Volk
 
 sudo -v
 clear
