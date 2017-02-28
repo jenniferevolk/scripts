@@ -78,6 +78,7 @@ repo sublime    ppa:webupd8team/sublime-text-2
 repo docker     "deb https://apt.dockerproject.org/repo ubuntu-xenial main"
 repo heroku     "deb https://cli-assets.heroku.com/branches/stable/apt ./"
 repo spotify    "deb http://repository.spotify.com stable non-free"
+repo mate-tweak ppa:ubuntu-mate-dev/ppa
 
 sudo apt-get update >>setup.log 2>&1
 
@@ -132,13 +133,34 @@ xinstall cabextract
 echo "desktop tools.."
 xinstall redshift-gtk
 xinstall geoclue-2.0
-xinstall plank
 xinstall clipit
 xinstall tilda
 xinstall autokey-gtk
 xinstall variety
 xinstall spotify-client
-xinstall gnome-do
+
+##mate tweak and related apps
+xinstall mate-tweak
+xinstall mate-menu
+xinstall maximus
+xinstall libtopmenu-client-gtk2-0
+xinstall libtopmenu-client-gtk3-0
+xinstall mate-applet-topmenu
+xinstall plank
+xinstall mate-indicator-applet
+xinstall mate-dock-applet
+xinstall synapse
+xinstall indicator-application-gtk2
+xinstall indicator-sound-gtk2
+
+wget https://launchpad.net/ubuntu/+archive/primary/+files/ubuntu-mate-settings_16.04.5.3.tar.xz >>setup.log 2>&1
+
+sudo tar --strip-components=1 -xf ubuntu-mate-settings_16.04.5.3.tar.xz -C / ubuntu-mate-settings-xenial/usr/share/mate-panel/layouts >>setup.log 2>&1
+sudo tar --strip-components=1 -xf ubuntu-mate-settings_16.04.5.3.tar.xz -C / ubuntu-mate-settings-xenial/usr/share/mate/autostart/tilda.desktop >>setup.log 2>&1
+sudo tar --strip-components=1 -xf ubuntu-mate-settings_16.04.5.3.tar.xz -C / ubuntu-mate-settings-xenial/usr/share/plank/themes/Ubuntu-MATE/ >>setup.log 2>&1
+
+rm ubuntu-mate-settings_16.04.5.3.tar.xz
+
 
 echo "icons and theme.."
 xinstall numix-icon-theme-circle
