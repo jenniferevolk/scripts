@@ -43,7 +43,8 @@ sudo add-apt-repository -y ppa:nilarimogard/webupd8 >>setup.log 2>&1
 echo "  ${GREEN}atom${NC}"
 sudo add-apt-repository -y ppa:webupd8team/atom >>setup.log 2>&1
 echo "  ${GREEN}heroku${NC}"
-sudo add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/apt ./" >>setup.log 2>&1 #heroku
+sudo add-apt-repository -y "deb https://cli-assets.heroku.com/branches/stable/apt ./" >>setup.log 2>&1 
+curl -SsL https://cli-assets.heroku.com/apt/release.key | sudo apt-key add - >>setup.log 2>&1
 echo "  ${GREEN}spotify${NC}"
 sudo apt-add-repository -y "deb http://repository.spotify.com stable non-free" >>setup.log 2>&1
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D2C19886 >>setup.log 2>&1
@@ -54,7 +55,9 @@ sudo add-apt-repository -y ppa:noobslab/themes >>setup.log 2>&1
 echo "  ${GREEN}Sublime${NC}"
 sudo add-apt-repository -y ppa:webupd8team/sublime-text-2 >>setup.log 2>&1
 echo "  ${GREEN}Docker${NC}"
-curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add - >>setup.log 2>&1
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D >>setup.log 2>&1
+sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' >>setup.log 2>&1
+
 
 #echo "  ${GREEN}Nvidia drivers${NC}"
 #add-apt-repository -y ppa:graphics-drivers/ppa >>setup.log 2>&1
@@ -135,7 +138,6 @@ xinstall arc-theme
 
 echo "graphics.."
 xinstall blender
-xinstall shotwell
 xinstall gimp
 xinstall shutter
 xinstall cheese
@@ -145,13 +147,14 @@ echo "office.."
 xinstall zim
 xinstall anki
 xinstall cherrytree
-xinstall thunderbird
 
 echo "virtualization.."
 xinstall vagrant
 xinstall virtualbox-qt
 xinstall virtualbox-guest-additions-iso
 adduser jennifer vboxusers >>setup.log 2>&1
+xinstall linux-image-generic
+xinstall linux-image-extra-virtual
 xinstall docker-engine
 
 echo "web browsers.."
@@ -185,36 +188,35 @@ xinstall openssl
 xinstall sqlite3
 xinstall zlib1g
 xinstall zlib1g-dev
+xinstall libgdbm-dev
+xinstall libncurses5-dev
+xinstall libffi-dev
+xinstall heroku
 
-echo "  ${GREEN}installing heroku..${NC}"
-curl -L -s https://cli-assets.heroku.com/apt/release.key | apt-key add - >>setup.log 2>&1
-sudo apt-get install -q -y --allow-unauthenticated heroku >> setup.log 2>&1 || echo "*** Heroku not installed${NC} ***"
 
 binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
 xinstall atom
 xinstall sublime-text
 
 echo "installing rails.."
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>setup.log 2>&1
-curl -L -s get.rvm.io | bash -s stable --ruby >>setup.log 2>&1
-source ~/.rvm/scripts/rvm
-rvm version >> $rvm
-echo "       ${GREEN} $rvm ${NC}"
-ruby --version >> $ruby
-echo "       ${GREEN} $ruby ${NC}"
+echo "${GREEN}"
+gpg --keyserver hkp://pgp.mit.edu --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 >>setup.log 2>&1
+curl -sSL https://get.rvm.io | bash -s stable >>setup.log 2>&1
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+rvm version
+rvm install 2.4.0
+rvm use 2.4.0 --default
+ruby --version
 
-sudo gem install rails >>setup.log 2>&1
-rails version >> $rails
-echo "       ${GREEN} $rails ${NC}"
-
+sudo gem install rails -v 5.0.1 >>setup.log 2>&1
+rails version
 sudo gem install bundler >>setup.log 2>&1
-bundler version >> $bundler
-echo "       ${GREEN} $bundler ${NC}"
-
+bundler version
+echo "${NC}"
 #settings
 echo "settings.."
 echo "  ${GREEN}turn on firewall${NC}"
-ufw enable >>setup.log 2>&1
+sudo ufw enable >>setup.log 2>&1
 
 #cleaning up
 echo "cleaning up.."
