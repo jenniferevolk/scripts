@@ -23,6 +23,7 @@ sudo cp /tmp/apt-fast/apt-fast.conf /etc >> setup.log 2>&1
 echo "set faster mirrors"
 MIRRORS="MIRRORS=( 'http://mirror.os6.org/ubuntu/,http://mirror.math.ucdavis.edu/ubuntu/,http://mirrors.us.kernel.org/ubuntu/, http://mirrors.xmission.com/ubuntu/' )"
 sudo sh -c "echo $MIRRORS  >> /etc/apt-fast.conf" >> setup.log 2>&1
+
 sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 sudo sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 
@@ -51,53 +52,9 @@ repo(){
     sudo add-apt-repository -y $2 >>setup.log 2>&1
     echo "  ${GREEN} $1 ${NC}"
 }
-
-
-################### Repositories #########################
-
-echo "Adding repositories.."
-sudo apt-fast install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common >>setup.log 2>&1
-
-#keys
-#heroku
-curl -SsL https://cli-assets.heroku.com/apt/release.key | sudo apt-key add - >>setup.log 2>&1
-#spotify
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D2C19886 >>setup.log 2>&1 
-#docker
-sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D >>setup.log 2>&1 
-
-repo tlp        ppa:linrunner/tlp
-repo variety    ppa:peterlevi/ppa
-repo telegram   ppa:atareao/telegram
-repo neofetch   ppa:dawidd0811/neofetch
-repo tor        ppa:webupd8team/tor-browser
-repo youtube-dl ppa:nilarimogard/webupd8
-repo atom       ppa:webupd8team/atom
-repo numix      ppa:numix/ppa
-repo arc        ppa:noobslab/themes
-repo sublime    ppa:webupd8team/sublime-text-2
-repo docker     "deb https://apt.dockerproject.org/repo ubuntu-xenial main"
-repo heroku     "deb https://cli-assets.heroku.com/branches/stable/apt ./"
-repo spotify    "deb http://repository.spotify.com stable non-free"
-repo mate-tweak ppa:ubuntu-mate-dev/ppa
-
-sudo apt-get update >>setup.log 2>&1
-
-
-################### software #########################
-echo "Install software"
-echo ""
-#install messengers early so we can chat while install continues
-echo "installing messengers.. (we can chat while installing)"
-binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
-xinstall telegram
-binstall skype https://go.skype.com/skypeforlinux-64-alpha.deb
-binstall discord "https://discordapp.com/api/download?platform=linux&format=deb"
-binstall slack https://downloads.slack-edge.com/linux_releases/slack-desktop-2.4.2-amd64.deb
-binstall gitter https://update.gitter.im/linux64/gitter_3.1.0_amd64.deb
-
-echo "upgrading..."
-sudo apt-fast -y upgrade >>setup.log 2>&1
+slowinstall(){
+echo "*** ${RED}$1 Warp drive failed switching to impulse (one at a time) ${NC} ***"
+echo "mass install failed switching to individual install">>setup.log
 
 echo "system stuff..."
 xinstall tlp
@@ -216,9 +173,60 @@ xinstall libgdbm-dev
 xinstall libncurses5-dev
 xinstall libffi-dev
 xinstall heroku
-binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
 xinstall atom
 xinstall sublime-text
+}
+################### Repositories #########################
+
+echo "Adding repositories.."
+sudo apt-fast install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common >>setup.log 2>&1
+
+#keys
+#heroku
+curl -SsL https://cli-assets.heroku.com/apt/release.key | sudo apt-key add - >>setup.log 2>&1
+#spotify
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D2C19886 >>setup.log 2>&1 
+#docker
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D >>setup.log 2>&1 
+
+repo tlp        ppa:linrunner/tlp
+repo variety    ppa:peterlevi/ppa
+repo telegram   ppa:atareao/telegram
+repo neofetch   ppa:dawidd0811/neofetch
+repo tor        ppa:webupd8team/tor-browser
+repo youtube-dl ppa:nilarimogard/webupd8
+repo atom       ppa:webupd8team/atom
+repo numix      ppa:numix/ppa
+repo arc        ppa:noobslab/themes
+repo sublime    ppa:webupd8team/sublime-text-2
+repo docker     "deb https://apt.dockerproject.org/repo ubuntu-xenial main"
+repo heroku     "deb https://cli-assets.heroku.com/branches/stable/apt ./"
+repo spotify    "deb http://repository.spotify.com stable non-free"
+repo mate-tweak ppa:ubuntu-mate-dev/ppa
+
+sudo apt-get update >>setup.log 2>&1
+
+echo "installing rambox early so we can chat during install"
+binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
+
+echo "upgrading..."
+sudo apt-fast -y upgrade >>setup.log 2>&1
+
+echo "special repo installs"
+apt-get -y -q "tlp variety telegram neofetch tor-browser youtube-dl atom sublime-text docker heroku mate-tweak spotify-client numix-icon-theme-circle numix-folders arc-theme tor-browser docker-engine" >>setup.log 2>&1
+
+echo "lets try warp speed (mass install): warp speed....engage!"
+apt-fast -q -y install thermald microcode.ctl intel-microcode preload mint-meta-codecs powertop htop libcurl3 libav-tools ffmpeg xclip p7zip-rar p7zip-full unace unrar zip unzip sharutils rar uudeview mpack arj cabextract redshift-gtk geoclue-2.0 clipit tilda autokey-gtk mate-menu maximus libtopmenu-client-gtk2-0 libtopmenu-client-gtk3-0 mate-applet-topmenu plank mate-indicator-applet mate-dock-applet synapse indicator-application-gtk2 indicator-sound-gtk2 blender gimp shutter cheese pinta zim anki cherrytree vagrant virtualbox-qt virtualbox-guest-additions-iso linux-image-generic linux-image-extra-virtual chromium-browser autoconf automake bison build-essential curl git-core libapr1 libaprutil1 libc6-dev libltdl-dev libreadline6 libreadline6-dev libsqlite3-0 libsqlite3-dev libssl-dev libtool libxml2-dev libxslt-dev libxslt1-dev libyaml-dev ncurses-dev nodejs openssl sqlite3 zlib1g zlib1g-dev libgdbm-dev libncurses5-dev libffi-dev sublime-text || slowinstall
+
+echo "repo installs finished"
+
+echo "installing slow downloads"
+binstall skype https://go.skype.com/skypeforlinux-64-alpha.deb
+binstall discord "https://discordapp.com/api/download?platform=linux&format=deb"
+binstall slack https://downloads.slack-edge.com/linux_releases/slack-desktop-2.4.2-amd64.deb
+binstall gitter https://update.gitter.im/linux64/gitter_3.1.0_amd64.deb
+binstall gitkracken https://release.gitkraken.com/linux/gitkraken-amd64.deb
+
 
 echo "installing rails..${GREEN}"
 
