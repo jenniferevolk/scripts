@@ -7,13 +7,21 @@ RED='\033[0;31m'
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
+sudo apt-get install -y aria2 git
+git clone https://github.com/ilikenwf/apt-fast /tmp/apt-fast
+sudo cp /tmp/apt-fast/apt-fast /usr/bin
+sudo chmod +x /usr/bin/apt-fast
+sudo cp /tmp/apt-fast/apt-fast.conf /etc
+sudo echo "MIRRORS=( 'http://mirror.network32.net/ubuntu/,http://mirror.math.ucdavis.edu/ubuntu/,http://uk-mirrors.evowise.com/ubuntu/, http://mirrors.xmission.com/ubuntu/' )" >> /etc/apt-fast.conf
+
+
 #functions
 xinstall () {
   echo "  ${GREEN}installing $1${NC}"
   echo "">>setup.log
   echo "========= installing $1 ==========" >> setup.log
   echo "">>setup.log
-  sudo apt-get install -q -y "$1" >> setup.log 2>&1 || echo "*** ${RED}$1 not installed${NC} ***"
+  sudo apt-fast install -q -y "$1" >> setup.log 2>&1 || echo "*** ${RED}$1 not installed${NC} ***"
 }
 binstall () {
   echo "  ${GREEN}installing $1${NC}"
@@ -27,7 +35,7 @@ binstall () {
 }
 
 echo "Adding repositories.."
-sudo apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common >>setup.log 2>&1
+sudo apt-fast install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common >>setup.log 2>&1
 echo "  ${GREEN}tlp${NC}"
 sudo add-apt-repository -y ppa:linrunner/tlp >>setup.log 2>&1
 echo "  ${GREEN}variety${NC}"
@@ -58,16 +66,10 @@ echo "  ${GREEN}Docker${NC}"
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D >>setup.log 2>&1
 sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' >>setup.log 2>&1
 
-
-#echo "  ${GREEN}Nvidia drivers${NC}"
-#add-apt-repository -y ppa:graphics-drivers/ppa >>setup.log 2>&1
-
 echo "change mirrors & update repositories.."
 sudo sed -i s/"archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
 sudo sed -i s/"packages.linuxmint.com"/"mirrors.kernel.org\/linuxmint-packages"/g /etc/apt/sources.list.d/official-package-repositories.list >>setup.log 2>&1
-sudo apt-get update >>setup.log 2>&1
-sudo sed -i s/"us.archive.ubuntu.com"/"mirror.math.ucdavis.edu"/g /etc/apt/sources.list >>setup.log 2>&1
-sudo apt-get update >>setup.log 2>&1
+sudo apt-fast update >>setup.log 2>&1
 
 #install messengers early so we can chat while install continues
 echo "installing messengers.. (we can chat while installing)"
@@ -78,7 +80,7 @@ binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
 
 
 echo "running updates..."
-sudo apt-get -y upgrade >>setup.log 2>&1
+sudo apt-fast -y upgrade >>setup.log 2>&1
 
 echo "hardware stuffs..."
 xinstall tlp
@@ -89,12 +91,7 @@ xinstall preload
 
 echo "codecs..  remove flash"
 xinstall mint-meta-codecs
-apt-get purge -y -q flashplugin-installer >>setup.log 2>&1
-
-#echo "DVD support.."
-#xinstall libdvdread4 
-#xinstall libdvd-pkg
-#dpkg-reconfigure libdvd-pkg
+sudo apt-get purge -y -q flashplugin-installer >>setup.log 2>&1
 
 echo "cli tools.."
 xinstall powertop
