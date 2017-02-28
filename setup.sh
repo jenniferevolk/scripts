@@ -92,6 +92,8 @@ binstall rambox https://getrambox.herokuapp.com/download/linux_64?filetype=deb
 xinstall telegram
 binstall skype https://go.skype.com/skypeforlinux-64-alpha.deb
 binstall discord "https://discordapp.com/api/download?platform=linux&format=deb"
+binstall slack https://downloads.slack-edge.com/linux_releases/slack-desktop-2.4.2-amd64.deb
+binstall gitter https://update.gitter.im/linux64/gitter_3.1.0_amd64.deb
 
 echo "upgrading..."
 sudo apt-fast -y upgrade >>setup.log 2>&1
@@ -252,6 +254,15 @@ sudo ufw enable >>setup.log 2>&1
 
 echo "  ${GREEN}add user to vbox group ${NC}"
 sudo adduser $USER vboxusers >>setup.log 2>&1
+
+echo "  ${GREEN}mate-tweak settings ${NC}"
+wget https://launchpad.net/ubuntu/+archive/primary/+files/ubuntu-mate-settings_16.04.5.3.tar.xz >>setup.log 2>&1
+
+sudo tar --strip-components=1 -xf ubuntu-mate-settings_16.04.5.3.tar.xz -C / ubuntu-mate-settings-xenial/usr/share/mate-panel/layouts >>setup.log 2>&1
+sudo tar --strip-components=1 -xf ubuntu-mate-settings_16.04.5.3.tar.xz -C / ubuntu-mate-settings-xenial/usr/share/mate/autostart/tilda.desktop >>setup.log 2>&1
+sudo tar --strip-components=1 -xf ubuntu-mate-settings_16.04.5.3.tar.xz -C / ubuntu-mate-settings-xenial/usr/share/plank/themes/Ubuntu-MATE/ >>setup.log 2>&1
+rm ubuntu-mate-settings_16.04.5.3.tar.xz
+
 ################### clean up #########################
 
 echo "cleaning up.."
