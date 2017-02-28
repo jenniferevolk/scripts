@@ -7,12 +7,12 @@ RED='\033[0;31m'
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
-sudo apt-get install -y aria2 git
-git clone https://github.com/ilikenwf/apt-fast /tmp/apt-fast
-sudo cp /tmp/apt-fast/apt-fast /usr/bin
-sudo chmod +x /usr/bin/apt-fast
-sudo cp /tmp/apt-fast/apt-fast.conf /etc
-sudo echo "MIRRORS=( 'http://mirror.network32.net/ubuntu/,http://mirror.math.ucdavis.edu/ubuntu/,http://uk-mirrors.evowise.com/ubuntu/, http://mirrors.xmission.com/ubuntu/' )" >> /etc/apt-fast.conf
+sudo apt-get install -y aria2 git >> setup.log 2>&1
+git clone https://github.com/ilikenwf/apt-fast /tmp/apt-fast >> setup.log 2>&1
+sudo cp /tmp/apt-fast/apt-fast /usr/bin >> setup.log 2>&1
+sudo chmod +x /usr/bin/apt-fast >> setup.log 2>&1
+sudo cp /tmp/apt-fast/apt-fast.conf /etc >> setup.log 2>&1
+sudo sh -c "echo "MIRRORS=( 'http://mirror.network32.net/ubuntu/,http://mirror.math.ucdavis.edu/ubuntu/,http://uk-mirrors.evowise.com/ubuntu/, http://mirrors.xmission.com/ubuntu/' )" >> /etc/apt-fast.conf" >> setup.log 2>&1
 
 
 #functions
